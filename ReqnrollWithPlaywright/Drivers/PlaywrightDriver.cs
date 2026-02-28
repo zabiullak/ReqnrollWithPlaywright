@@ -9,6 +9,7 @@ namespace ReqnrollWithPlaywright.Drivers
 
         private IPlaywright? _playwright;
         private IBrowser? _browser;
+        private IBrowserContext? _context;
 
         public async Task InitializeAsync()
         {
@@ -18,7 +19,8 @@ namespace ReqnrollWithPlaywright.Drivers
             {
                 Headless = false
             });
-            Page = await _browser.NewPageAsync();
+            _context = await _browser.NewContextAsync();
+            Page = await _context.NewPageAsync();
             Log.Information("Browser launched and new page created successfully");
         }
 
@@ -40,10 +42,18 @@ namespace ReqnrollWithPlaywright.Drivers
         public async Task DisposeAsync()
         {
             Log.Information("Closing browser");
-            if (_browser is not null)
-                await _browser.CloseAsync();
+            try
+            {
+                if (_context is not null)
+                    await _context.CloseAsync();
 
-            _playwright?.Dispose();
+                if (_browser is not null)
+                    await _browser.CloseAsync();
+            }
+            finally
+            {
+                _playwright?.Dispose();
+            }
             Log.Information("Browser closed and resources disposed");
         }
     }
