@@ -1,0 +1,36 @@
+
+pwsh playwright.ps1 show-trace "Traces\Check_My_Local_Weather_20250115_083005.zip"
+
+---------------------------------
+
+# Run by a single tag
+dotnet test --filter "TestCategory=LocalWeather"
+
+# Run a specific scenario
+dotnet test --filter "TestCategory=Test-001"
+
+# AND — must match both tags
+dotnet test --filter "TestCategory=LocalWeather&TestCategory=Test-001"
+
+# OR — match either tag
+dotnet test --filter "TestCategory=Test-001|TestCategory=Test-003"
+
+# NOT — exclude a tag
+dotnet test --filter "TestCategory!=Test-003"
+
+---------------------------------
+
+Retrying failed tests:
+
+
+---------------------------------
+
+
+How to do test reporting : Allure
+
+
+-------------------------
+
+Next:
+
+Do Api testing
