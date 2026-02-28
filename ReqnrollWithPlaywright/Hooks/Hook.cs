@@ -14,7 +14,7 @@ namespace ReqnrollWithPlaywright.Hooks
             _scenarioContext = scenarioContext;
         }
 
-        [BeforeScenario]
+        [BeforeScenario(Order = 2)]
         public async Task BeforeScenario()
         {
             await _playwrightDriver.InitializeAsync();

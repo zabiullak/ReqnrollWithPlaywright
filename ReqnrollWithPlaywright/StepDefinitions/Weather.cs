@@ -41,7 +41,7 @@ namespace ReqnrollWithPlaywright.StepDefinitions
         {
             await Assertions.Expect(
                 _playwrightDriver.Page.Locator(WeatherPageLocators.LocationHeading)
-            ).ToContainTextAsync("abc");
+            ).ToContainTextAsync(city);
         }
     }
 }
