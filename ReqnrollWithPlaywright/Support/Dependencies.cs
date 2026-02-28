@@ -1,5 +1,6 @@
 using Reqnroll.BoDi;
 using ReqnrollWithPlaywright.Drivers;
+using ReqnrollWithPlaywright.Pages;
 
 namespace ReqnrollWithPlaywright.Support
 {
@@ -19,5 +20,13 @@ namespace ReqnrollWithPlaywright.Support
             //_objectContainer.RegisterTypeAs<ChromeDriver, IDriver>();
             //_objectContainer.RegisterTypeAs<PlaywrightDriver, PlaywrightDriver>();
         }
+
+        //[BeforeScenario(Order = 3)]
+        //public void RegisterPageObjects()
+        //{
+        //    var driver = _objectContainer.Resolve<PlaywrightDriver>();
+        //    _objectContainer.RegisterInstanceAs(new HomePage(driver));
+        //    _objectContainer.RegisterInstanceAs(new NewsPage(driver));
+        //}
     }
 }

@@ -13,6 +13,12 @@ Scenario: Check My Local Weather - 1
 @Test-002
 Scenario: Check My Local Weather - 2
 	Given i navigate to "https://www.bbc.com/weather"
-	When i input the location "Bangalore, India"
+	When i input the location "Chennai International Airport, India"
 	And  click search
-	Then i see current weather for "Bangalore"
+	Then i see current weather for "Chennai"
+
+@Test-003
+Scenario: Check News page
+	Given i navigate to "https://www.bbc.com/weather"
+	When i click on News link
+	Then i see the News page

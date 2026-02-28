@@ -1,54 +1,62 @@
-﻿using Microsoft.Playwright;
+﻿using FluentAssertions;
+using Microsoft.Playwright;
+using NUnit.Framework;
+using Reqnroll.CommonModels;
+using ReqnrollWithPlaywright.Pages;
 using Serilog;
-using ReqnrollWithPlaywright.Drivers;
-using ReqnrollWithPlaywright.Locators;
 
 namespace ReqnrollWithPlaywright.StepDefinitions
 {
     [Binding]
     public sealed class Weather
     {
-        private readonly PlaywrightDriver _playwrightDriver;
+        private readonly HomePage _homePage;
+        private readonly NewsPage _newsPage;
 
-        public Weather(PlaywrightDriver playwrightDriver)
+        public Weather(HomePage homePage, NewsPage newsPage)
         {
-            _playwrightDriver = playwrightDriver;
+            _homePage = homePage;
+            _newsPage = newsPage;
         }
 
         [Given("i navigate to {string}")]
         public async Task GivenINavigateTo(string url)
         {
-            Log.Information("Navigating to URL: {Url}", url);
-            await _playwrightDriver.Page.GotoAsync(url, new PageGotoOptions
-            {
-                WaitUntil = WaitUntilState.DOMContentLoaded
-            });
-            Log.Debug("Page loaded: {Url}", url);
+            await _homePage.NavigateToAsync(url);
         }
 
         [When("i input the location {string}")]
         public async Task WhenIInputTheLocation(string location)
         {
-            Log.Information("Entering location into search box: {Location}", location);
-            await _playwrightDriver.Page.Locator(WeatherPageLocators.SearchInput).FillAsync(location);
+            await _homePage.EnterLocation(location);
         }
 
         [When("click search")]
         public async Task WhenClickSearch()
         {
-            Log.Information("Clicking the search button");
-            await _playwrightDriver.Page.GetByTitle(WeatherPageLocators.SearchBtn).ClickAsync();
-            Log.Debug("Search submitted");
+            await _homePage.ClickOnSearchbtn();
         }
 
         [Then("i see current weather for {string}")]
         public async Task ThenISeeCurrentWeatherFor(string city)
         {
-            Log.Information("Asserting weather page is shown for: {City}", city);
-            await Assertions.Expect(
-                _playwrightDriver.Page.Locator(WeatherPageLocators.LocationHeading)
-            ).ToContainTextAsync(city);
+            var result = await _homePage.GetCurrentWeatherInfo(city);
+            await Assertions.Expect(result).ToContainTextAsync(city);
             Log.Information("Assertion passed — weather page confirmed for: {City}", city);
+        }
+
+        [When("i click on News link")]
+        public async Task WhenIClickOnNewsLink()
+        {
+            await _homePage.ClickOnNewsLink();
+        }
+
+        [Then("i see the News page")]
+        public async Task ThenISeeTheNewsPage()
+        {
+            string response = await _newsPage.GetPageTitle();
+           response.Should().Contain("News");
+            Log.Information("Assertion passed — News page title contains 'News'");
         }
     }
 }
