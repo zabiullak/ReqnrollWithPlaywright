@@ -1,4 +1,5 @@
 using Microsoft.Playwright;
+using Serilog;
 
 namespace ReqnrollWithPlaywright.Drivers
 {
@@ -11,12 +12,14 @@ namespace ReqnrollWithPlaywright.Drivers
 
         public async Task InitializeAsync()
         {
+            Log.Information("Launching Chromium browser");
             _playwright = await Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
                 Headless = false
             });
             Page = await _browser.NewPageAsync();
+            Log.Information("Browser launched and new page created successfully");
         }
 
         public async Task CaptureScreenshotAsync(string fileName)
@@ -25,19 +28,23 @@ namespace ReqnrollWithPlaywright.Drivers
             var screenshotDir = Path.Combine(projectRoot, "Screenshots");
             Directory.CreateDirectory(screenshotDir);
             var screenshotPath = Path.Combine(screenshotDir, $"{fileName}.png");
+            Log.Warning("Step failed — capturing screenshot: {ScreenshotPath}", screenshotPath);
             await Page.ScreenshotAsync(new PageScreenshotOptions
             {
                 Path = screenshotPath,
                 FullPage = true
             });
+            Log.Information("Screenshot saved: {FileName}.png", fileName);
         }
 
         public async Task DisposeAsync()
         {
+            Log.Information("Closing browser");
             if (_browser is not null)
                 await _browser.CloseAsync();
 
             _playwright?.Dispose();
+            Log.Information("Browser closed and resources disposed");
         }
     }
 }

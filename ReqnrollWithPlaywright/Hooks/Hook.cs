@@ -1,4 +1,5 @@
-﻿using ReqnrollWithPlaywright.Drivers;
+﻿using Serilog;
+using ReqnrollWithPlaywright.Drivers;
 
 namespace ReqnrollWithPlaywright.Hooks
 {
@@ -17,23 +18,45 @@ namespace ReqnrollWithPlaywright.Hooks
         [BeforeScenario(Order = 2)]
         public async Task BeforeScenario()
         {
+            Log.Information("---------- Scenario Started: {Title} | Tags: [{Tags}] ----------",
+                _scenarioContext.ScenarioInfo.Title,
+                string.Join(", ", _scenarioContext.ScenarioInfo.Tags));
+
             await _playwrightDriver.InitializeAsync();
         }
 
         [AfterStep]
         public async Task AfterStep()
         {
+            var stepInfo = _scenarioContext.StepContext.StepInfo;
+
             if (_scenarioContext.TestError != null)
             {
+                Log.Error("FAILED | {StepType} {StepText} | Error: {ErrorMessage}",
+                    stepInfo.StepDefinitionType,
+                    stepInfo.Text,
+                    _scenarioContext.TestError.Message);
+
                 var scenarioTitle = _scenarioContext.ScenarioInfo.Title.Replace(" ", "_");
                 var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
                 await _playwrightDriver.CaptureScreenshotAsync($"{scenarioTitle}_{timestamp}");
+            }
+            else
+            {
+                Log.Information("PASSED | {StepType} {StepText}",
+                    stepInfo.StepDefinitionType,
+                    stepInfo.Text);
             }
         }
 
         [AfterScenario]
         public async Task AfterScenario()
         {
+            var result = _scenarioContext.TestError == null ? "PASSED" : "FAILED";
+            Log.Information("---------- Scenario {Result}: {Title} ----------",
+                result,
+                _scenarioContext.ScenarioInfo.Title);
+
             await _playwrightDriver.DisposeAsync();
         }
     }
