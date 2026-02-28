@@ -12,7 +12,7 @@ namespace ReqnrollWithPlaywright.Support
         private static Dictionary<string, string> _settings;
         private static bool _isLoaded = false;
 
-        public static void Load()
+        private static void Load()
         {
             _settings = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             string filePath = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", "Settings.runsettings"));

@@ -1,4 +1,5 @@
 using Microsoft.Playwright;
+using ReqnrollWithPlaywright.Support;
 using Serilog;
 
 namespace ReqnrollWithPlaywright.Drivers
@@ -14,11 +15,12 @@ namespace ReqnrollWithPlaywright.Drivers
 
         public async Task InitializeAsync()
         {
-            Log.Information("Launching Chromium browser");
+            bool headless = bool.Parse(RunSettingsReader.Get("Headless"));
+            Log.Information("Launching Chromium browser (Headless: {Headless})", headless);
             _playwright = await Playwright.CreateAsync();
             _browser = await _playwright.Chromium.LaunchAsync(new BrowserTypeLaunchOptions
             {
-                Headless = false
+                Headless = headless
             });
             _context = await _browser.NewContextAsync();
             Page = await _context.NewPageAsync();
