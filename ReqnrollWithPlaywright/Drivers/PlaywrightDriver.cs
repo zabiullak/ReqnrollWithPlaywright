@@ -19,6 +19,19 @@ namespace ReqnrollWithPlaywright.Drivers
             Page = await _browser.NewPageAsync();
         }
 
+        public async Task CaptureScreenshotAsync(string fileName)
+        {
+            var projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", ".."));
+            var screenshotDir = Path.Combine(projectRoot, "Screenshots");
+            Directory.CreateDirectory(screenshotDir);
+            var screenshotPath = Path.Combine(screenshotDir, $"{fileName}.png");
+            await Page.ScreenshotAsync(new PageScreenshotOptions
+            {
+                Path = screenshotPath,
+                FullPage = true
+            });
+        }
+
         public async Task DisposeAsync()
         {
             if (_browser is not null)

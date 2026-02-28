@@ -1,4 +1,6 @@
-﻿using ReqnrollWithPlaywright.Drivers;
+﻿using Microsoft.Playwright;
+using ReqnrollWithPlaywright.Drivers;
+using ReqnrollWithPlaywright.Locators;
 
 namespace ReqnrollWithPlaywright.StepDefinitions
 {
@@ -13,28 +15,33 @@ namespace ReqnrollWithPlaywright.StepDefinitions
         }
 
         [Given("i navigate to {string}")]
-        public void GivenINavigateTo(string p0)
+        public async Task GivenINavigateTo(string url)
         {
-            throw new PendingStepException();
+            await _playwrightDriver.Page.GotoAsync(url, new PageGotoOptions
+            {
+                WaitUntil = WaitUntilState.DOMContentLoaded
+            });
         }
 
         [When("i input the location {string}")]
-        public void WhenIInputTheLocation(string p0)
+        public async Task WhenIInputTheLocation(string location)
         {
-            throw new PendingStepException();
+            await _playwrightDriver.Page.Locator(WeatherPageLocators.SearchInput).FillAsync(location);
         }
 
         [When("click search")]
-        public void WhenClickSearch()
+        public async Task WhenClickSearch()
         {
-            throw new PendingStepException();
+            await _playwrightDriver.Page.GetByTitle(WeatherPageLocators.SearchBtn).ClickAsync();
+            //await _playwrightDriver.Page.WaitForLoadStateAsync(LoadState.NetworkIdle);
         }
 
         [Then("i see current weather for {string}")]
-        public void ThenISeeCurrentWeatherFor(string bangalore)
+        public async Task ThenISeeCurrentWeatherFor(string city)
         {
-            throw new PendingStepException();
+            await Assertions.Expect(
+                _playwrightDriver.Page.Locator(WeatherPageLocators.LocationHeading)
+            ).ToContainTextAsync("abc");
         }
-
     }
 }

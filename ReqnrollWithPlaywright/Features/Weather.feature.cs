@@ -131,7 +131,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 5
- await testRunner.GivenAsync("i navigate to \"https://www.bbc.co.uk/weather\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("i navigate to \"https://www.bbc.com/weather\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 6
  await testRunner.WhenAsync("i input the location \"Bangalore, India\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
