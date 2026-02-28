@@ -38,6 +38,7 @@ namespace ReqnrollWithPlaywright.Pages
         {
            Log.Information("Clicking on the News link");
             await NewsLink.First.ClickAsync();
+            await Page.WaitForLoadStateAsync(LoadState.Load);
             Log.Debug("News link clicked, navigating to News page");
         }
     }
