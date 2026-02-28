@@ -39,7 +39,10 @@ namespace ReqnrollWithPlaywright.Hooks
 
                 var scenarioTitle = _scenarioContext.ScenarioInfo.Title.Replace(" ", "_");
                 var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                await _playwrightDriver.CaptureScreenshotAsync($"{scenarioTitle}_{timestamp}");
+                var fileName = $"{scenarioTitle}_{timestamp}";
+
+                await _playwrightDriver.SaveTraceAsync(fileName);
+                await _playwrightDriver.CaptureScreenshotAsync(fileName);
             }
             else
             {
