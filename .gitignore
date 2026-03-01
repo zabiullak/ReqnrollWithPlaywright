@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /Screenshots
 /ReqnrollWithPlaywright/Features/Weather.feature.cs
 /Traces
+/allure-results/
+/TestReport/
