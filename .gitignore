@@ -362,7 +362,7 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Screenshots
-/ReqnrollWithPlaywright/Features/Weather.feature.cs
+/ReqnrollWithPlaywright/Features/*.feature.cs
 /Traces
 /allure-results/
 /TestReport/
