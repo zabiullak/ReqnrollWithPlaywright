@@ -1,4 +1,5 @@
-﻿using Serilog;
+﻿using Allure.Net.Commons;
+using Serilog;
 using ReqnrollWithPlaywright.Drivers;
 
 namespace ReqnrollWithPlaywright.Hooks
@@ -42,7 +43,8 @@ namespace ReqnrollWithPlaywright.Hooks
                 var fileName = $"{scenarioTitle}_{timestamp}";
 
                 await _playwrightDriver.SaveTraceAsync(fileName);
-                await _playwrightDriver.CaptureScreenshotAsync(fileName);
+                var screenshotPath = await _playwrightDriver.CaptureScreenshotAsync(fileName);
+                AllureApi.AddAttachment("Failure Screenshot", "image/png", screenshotPath);
             }
             else
             {

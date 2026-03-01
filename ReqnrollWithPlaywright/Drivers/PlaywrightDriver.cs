@@ -34,7 +34,7 @@ namespace ReqnrollWithPlaywright.Drivers
             Log.Information("Browser launched, new page created and tracing started");
         }
 
-        public async Task CaptureScreenshotAsync(string fileName)
+        public async Task<string> CaptureScreenshotAsync(string fileName)
         {
             var projectRoot = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..", "..", "..", ".."));
             var screenshotDir = Path.Combine(projectRoot, "Screenshots");
@@ -47,6 +47,7 @@ namespace ReqnrollWithPlaywright.Drivers
                 FullPage = true
             });
             Log.Information("Screenshot saved: {FileName}.png", fileName);
+            return screenshotPath;
         }
 
         public async Task SaveTraceAsync(string fileName)
