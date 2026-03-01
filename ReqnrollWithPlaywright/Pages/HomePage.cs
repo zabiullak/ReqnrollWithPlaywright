@@ -17,15 +17,12 @@ namespace ReqnrollWithPlaywright.Pages
 
         internal async Task EnterLocation(string location)
         {
-            Log.Information("Entering location into search box: {Location}", location);
-            await SearchBox.FillAsync(location);
+            await EnterTextAsync(SearchBox, location, "Search box");
         }
 
         internal async Task ClickOnSearchbtn()
         {
-            Log.Information("Clicking the search button");
-            await SearchBtn.ClickAsync();
-            Log.Debug("Search submitted");
+            await ClickAsync(SearchBtn, "Search button");
         }
 
         internal async Task<ILocator> GetCurrentWeatherInfo(string city)
@@ -36,10 +33,8 @@ namespace ReqnrollWithPlaywright.Pages
 
         internal async Task ClickOnNewsLink()
         {
-           Log.Information("Clicking on the News link");
-            await NewsLink.First.ClickAsync();
+            await ClickAsync(NewsLink.First, "News link");
             await Page.WaitForLoadStateAsync(LoadState.Load);
-            Log.Debug("News link clicked, navigating to News page");
         }
     }
 }
