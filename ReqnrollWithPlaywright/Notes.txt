@@ -26,7 +26,11 @@ Retrying failed tests:
 ---------------------------------
 
 
-How to do test reporting : Allure
+How to do test reporting : Allure   -- Done
+
+
+
+npm install -g allure-commandline --save-dev
 
 
 -------------------------
@@ -34,3 +38,7 @@ How to do test reporting : Allure
 Next:
 
 Do Api testing
+
+
+Github actions.
+Run tests in CI
