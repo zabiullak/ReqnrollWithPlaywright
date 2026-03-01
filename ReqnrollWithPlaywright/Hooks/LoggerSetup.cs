@@ -1,6 +1,6 @@
 using Serilog;
 
-namespace ReqnrollWithPlaywright.Support
+namespace ReqnrollWithPlaywright.Hooks
 {
     [Binding]
     public class LoggerSetup
