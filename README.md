@@ -246,8 +246,47 @@ await WaitForAsync(Modal, new LocatorWaitForOptions { State = WaitForSelectorSta
 
 ---
 
+## Parallel Execution
+
+Tests run in parallel at the scenario level with up to **4 workers** (configured in `AssemblyInfo.cs`):
+
+```csharp
+[assembly: Parallelizable(ParallelScope.Children)]
+[assembly: LevelOfParallelism(4)]
+```
+
+---
+
+## Retrying Failed Tests
+
+### In CI
+
+The GitHub Actions workflow automatically retries the full test suite up to **3 times** on failure. If tests pass on any attempt, the pipeline moves on immediately.
+
+---
+
+## CI/CD — GitHub Actions
+
+The workflow (`.github/workflows/playwright-tests.yml`) runs on every push/PR to `master`/`main` and can be triggered manually via `workflow_dispatch`.
+
+**Pipeline steps:**
+
+1. Checks out the repository
+2. Sets up .NET 10 SDK
+3. Restores dependencies and builds
+4. Installs Playwright Chromium browser
+5. Runs tests with **retry (up to 3 attempts)**
+6. Uploads artifacts — Allure results, screenshots, and traces
+7. Generates the Allure HTML report
+8. Publishes the report to **GitHub Pages** (on push to `master`)
+
+The live report is available at `https://zabiullak.github.io/ReqnrollWithPlaywright/`.
+
+---
+
 ## Roadmap
 
+- [x] Allure test reporting
+- [x] CI/CD pipeline (GitHub Actions)
+- [x] Retry failed tests
 - [ ] API testing layer
-- [ ] Retry failed tests
-- [ ] CI/CD pipeline integration (GitHub Actions)
