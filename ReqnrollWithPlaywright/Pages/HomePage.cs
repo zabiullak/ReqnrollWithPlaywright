@@ -25,10 +25,10 @@ namespace ReqnrollWithPlaywright.Pages
             await ClickAsync(SearchBtn, "Search button");
         }
 
-        internal async Task<ILocator> GetCurrentWeatherInfo(string city)
+        internal async Task<string> GetCurrentWeatherInfo(string city)
         {
             Log.Information("Asserting weather page is shown for: {City}", city);
-            return LocationHeading;
+            return await LocationHeading.InnerTextAsync();
         }
 
         internal async Task ClickOnNewsLink()

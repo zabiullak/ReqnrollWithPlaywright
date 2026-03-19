@@ -1,9 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.Playwright;
-using NUnit.Framework;
-using Reqnroll.CommonModels;
 using ReqnrollWithPlaywright.Pages;
 using Serilog;
+using System.Xml.Linq;
 
 namespace ReqnrollWithPlaywright.StepDefinitions
 {
@@ -41,7 +40,7 @@ namespace ReqnrollWithPlaywright.StepDefinitions
         public async Task ThenISeeCurrentWeatherFor(string city)
         {
             var result = await _homePage.GetCurrentWeatherInfo(city);
-            await Assertions.Expect(result).ToContainTextAsync(city);
+            result.Should().Contain(city);
             Log.Information("Assertion passed — weather page confirmed for: {City}", city);
         }
 
@@ -55,7 +54,7 @@ namespace ReqnrollWithPlaywright.StepDefinitions
         public async Task ThenISeeTheNewsPage()
         {
             string response = await _newsPage.GetPageTitle();
-           response.Should().Contain("News");
+            response.Should().Contain("News");
             Log.Information("Assertion passed — News page title contains 'News'");
         }
     }
