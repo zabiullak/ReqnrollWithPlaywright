@@ -1,4 +1,4 @@
-name: Playwright UI-Tests
+name: Playwright Tests
 
 on:
   push:
@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # .NET 10 is currently in preview � remove dotnet-quality once it goes GA
+      # .NET 10 is currently in preview — remove dotnet-quality once it goes GA
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
@@ -38,9 +38,9 @@ jobs:
         run: pwsh ReqnrollWithPlaywright/bin/Debug/net10.0/playwright.ps1 install --with-deps chromium
 
       - name: Run tests
-        run: dotnet test ReqnrollWithPlaywright/ReqnrollWithPlaywright.csproj --configuration Debug --no-build --settings ReqnrollWithPlaywright/CI.runsettings
+        run: dotnet test ReqnrollWithPlaywright/ReqnrollWithPlaywright.csproj --configuration Debug --no-build --settings ReqnrollWithPlaywright/Settings.runsettings
 
-      # ?? Artifacts (always upload so failures are still visible) ??????????????
+      # ── Artifacts (always upload so failures are still visible) ──────────────
 
       - name: Upload Allure results
         if: always()
@@ -68,7 +68,7 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
-      # ?? Allure HTML report ????????????????????????????????????????????????????
+      # ── Allure HTML report ────────────────────────────────────────────────────
 
       - name: Generate Allure HTML report
         if: always()
@@ -85,7 +85,7 @@ jobs:
           retention-days: 14
 
       # Publishes the report to https://<your-github-username>.github.io/<repo-name>/
-      # Only runs on push to master � PRs do not have write access to gh-pages
+      # Only runs on push to master — PRs do not have write access to gh-pages
       - name: Publish Allure report to GitHub Pages
         if: always() && github.event_name != 'pull_request'
         uses: peaceiris/actions-gh-pages@v3
