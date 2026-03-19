@@ -20,12 +20,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # .NET 10 is currently in preview — remove dotnet-quality once it goes GA
       - name: Setup .NET 10
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '10.x'
-          dotnet-quality: 'preview'
+          dotnet-version: '10.0'
 
       - name: Restore dependencies
         run: dotnet restore ReqnrollWithPlaywright/ReqnrollWithPlaywright.csproj
