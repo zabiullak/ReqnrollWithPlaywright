@@ -3,7 +3,7 @@
 
 	<TestRunParameters>
 		<Parameter name="Browser" value="Chromium" />
-		<Parameter name="Headless" value="false" />
+		<Parameter name="Headless" value="true" />
 		<Parameter name="BaseUrl" value="https://www.bbc.com/weather" />
 		<Parameter name="Username" value="" />
 		<Parameter name="Password" value="" />
