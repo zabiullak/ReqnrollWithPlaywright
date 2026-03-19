@@ -1,8 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.Playwright;
 using ReqnrollWithPlaywright.Pages;
 using Serilog;
-using System.Xml.Linq;
 
 namespace ReqnrollWithPlaywright.StepDefinitions
 {

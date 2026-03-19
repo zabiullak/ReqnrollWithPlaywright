@@ -5,6 +5,7 @@
 		<Parameter name="Browser" value="Chromium" />
 		<Parameter name="Headless" value="true" />
 		<Parameter name="BaseUrl" value="https://www.bbc.com/weather" />
+		<Parameter name="Timeout" value="30000" />
 		<Parameter name="Username" value="" />
 		<Parameter name="Password" value="" />
 	</TestRunParameters>

@@ -185,6 +185,47 @@ namespace ReqnrollWithPlaywright.Pages
             await locator.IsCheckedAsync();
 
         // -------------------------------------------------------------------------
+        // Checkbox / Radio
+        // -------------------------------------------------------------------------
+
+        /// <summary>Check a checkbox or radio button (no-op if already checked).</summary>
+        protected async Task CheckAsync(ILocator locator, string description = "")
+        {
+            Log.Information("Check — {Target}", Label(locator, description));
+            await locator.CheckAsync();
+        }
+
+        /// <summary>Uncheck a checkbox (no-op if already unchecked).</summary>
+        protected async Task UncheckAsync(ILocator locator, string description = "")
+        {
+            Log.Information("Uncheck — {Target}", Label(locator, description));
+            await locator.UncheckAsync();
+        }
+
+        // -------------------------------------------------------------------------
+        // Attributes
+        // -------------------------------------------------------------------------
+
+        /// <summary>Return the value of the given attribute on the element.</summary>
+        protected async Task<string?> GetAttributeAsync(ILocator locator, string attribute, string description = "")
+        {
+            var value = await locator.GetAttributeAsync(attribute);
+            Log.Information("Get attribute '{Attribute}'='{Value}' — {Target}", attribute, value, Label(locator, description));
+            return value;
+        }
+
+        // -------------------------------------------------------------------------
+        // File upload
+        // -------------------------------------------------------------------------
+
+        /// <summary>Upload one or more files via a file-input element.</summary>
+        protected async Task UploadFileAsync(ILocator locator, string filePath, string description = "")
+        {
+            Log.Information("Upload file '{File}' — {Target}", filePath, Label(locator, description));
+            await locator.SetInputFilesAsync(filePath);
+        }
+
+        // -------------------------------------------------------------------------
         // Wait
         // -------------------------------------------------------------------------
 

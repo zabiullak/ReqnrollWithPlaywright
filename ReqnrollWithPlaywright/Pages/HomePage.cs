@@ -28,7 +28,7 @@ namespace ReqnrollWithPlaywright.Pages
         internal async Task<string> GetCurrentWeatherInfo(string city)
         {
             Log.Information("Asserting weather page is shown for: {City}", city);
-            return await LocationHeading.InnerTextAsync();
+            return await GetTextAsync(LocationHeading, "Location heading");
         }
 
         internal async Task ClickOnNewsLink()

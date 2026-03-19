@@ -62,7 +62,7 @@ namespace ReqnrollWithPlaywright.Hooks
                 result,
                 _scenarioContext.ScenarioInfo.Title);
 
-            await _playwrightDriver.DisposeAsync();
+            await _playwrightDriver.DisposeAsync().AsTask();
         }
     }
 }
