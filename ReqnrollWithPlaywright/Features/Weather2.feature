@@ -7,7 +7,7 @@ Scenario: Check My Local Weather - 3
 	Given i navigate to "https://www.bbc.com/weather"
 	When i input the location "Bangalore, India"
 	And  click search
-	Then i see current weather for "Bangalore"
+	Then i see current weather for "Chennai"
 
 @LocalWeather
 @Test-002
