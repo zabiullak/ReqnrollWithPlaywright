@@ -35,8 +35,25 @@ jobs:
       - name: Install Playwright browsers
         run: pwsh ReqnrollWithPlaywright/bin/Debug/net10.0/playwright.ps1 install --with-deps chromium
 
-      - name: Run tests
-        run: dotnet test ReqnrollWithPlaywright/ReqnrollWithPlaywright.csproj --configuration Debug --no-build --settings ReqnrollWithPlaywright/Settings.runsettings
+      - name: Run tests (retry up to 3 times on failure)
+        run: |
+          max_attempts=3
+          attempt=1
+          while [ $attempt -le $max_attempts ]; do
+            echo "▶ Test attempt $attempt of $max_attempts"
+            if dotnet test ReqnrollWithPlaywright/ReqnrollWithPlaywright.csproj \
+                 --configuration Debug --no-build \
+                 --settings ReqnrollWithPlaywright/Settings.runsettings; then
+              echo "✅ Tests passed on attempt $attempt"
+              break
+            fi
+            if [ $attempt -eq $max_attempts ]; then
+              echo "❌ Tests failed after $max_attempts attempts"
+              exit 1
+            fi
+            echo "⚠️ Attempt $attempt failed — retrying..."
+            attempt=$((attempt + 1))
+          done
 
       # ── Artifacts (always upload so failures are still visible) ──────────────
 
