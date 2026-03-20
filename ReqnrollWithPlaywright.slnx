@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="ApiTesting/ApiTesting.csproj" Id="cf077226-710d-4385-a7a7-322b6f820a41" />
   <Project Path="ReqnrollWithPlaywright/ReqnrollWithPlaywright.csproj" />
 </Solution>
